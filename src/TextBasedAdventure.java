@@ -9,6 +9,7 @@ public class TextBasedAdventure {
     int playerHealth = 15;
     int giantHealth = 20;
     boolean hasStaff = false;
+    boolean visitStaff = false;
     Scanner keyboardInput = new Scanner(System.in);
 
     public void execute() {
@@ -19,15 +20,12 @@ public class TextBasedAdventure {
     }
 
     public void start() {
-        System.out.println("You find yourself in a large room. What would you like to do?\n1. Go left \n2. Go right \n3. Go Straight");
+        System.out.println("You find yourself in a large room. What would you like to do?\n1. Go left \n2. Go right");
         int input = keyboardInput.nextInt();
         if (input == 1) {
             goLeft();
-        }
-        else if (input == 2) {
+        } else if (input == 2) {
             goRight();
-        } else if (input == 3) {
-            goStraight();
         }
     }
 
@@ -37,18 +35,16 @@ public class TextBasedAdventure {
         if (input == 1) {
             System.out.println("Battle COMMENCE !");
             fight();
-        }
-        else if (input == 2) {
+        } else if (input == 2) {
             start();
-        }  
+        }
     }
 
     public void goRight() {
         if (!hasSword) {
             System.out.println("You find a sword on the ground!");
             hasSword = true;
-        }
-        else {
+        } else {
             System.out.println("There's nothing here...");
         }
         start();
@@ -68,6 +64,9 @@ public class TextBasedAdventure {
             } else if (input == 2) {
                 System.out.println("Yeah, you don't know what could be waiting for you at the end of that hole. Best to remain cautious.");
             }
+        } else if (hasStaff && !visitStaff) {
+            System.out.println("There is more to this room then there seems. In the corner is a message carved into the wall. It says\n\"Go right if you would like a sword, good luck\"");
+            visitStaff = true;
         } else {
             System.out.println("The room is dark. There is nothing else in here.");
         }
@@ -142,18 +141,18 @@ public class TextBasedAdventure {
         }
     }
 
-    public void flight()
-    {
-        int num =ran.nextInt(10)+1;
-        if(num>5)
-        {
-            System.out.println("You made it past the monster but fell into a hole and fell in water and drowned ");
+    public void interactWithCharacter() {
+        System.out.println("A mysterious figure appears before you. 'Answer my riddle and I shall grant you a clue to escape this cave,' it says.");
+        System.out.println("'I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?'");
+        String answer = keyboardInput.next();
+        if ("echo".equalsIgnoreCase(answer)) {
+            System.out.println("The figure nods approvingly. 'You are wise. Look for the lever hidden behind the stone in the next room.'");
+        } else {
+            System.out.println("The figure shakes its head. 'That is incorrect. You may try again later.'");
         }
-        else if(num<5)
-        {
-            System.out.println(" You made it out the cave ");
-        }
+        start();
     }
+
 
     public static void main(String[] args) {
         new TextBasedAdventure().execute();
