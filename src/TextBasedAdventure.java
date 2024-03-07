@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class TextBasedAdventure {
     boolean hasSword = false;
     boolean hasStaff = false;
+    boolean visitStaff = false;
     Scanner keyboardInput = new Scanner(System.in);
 
     public void execute() {
@@ -51,6 +52,9 @@ public class TextBasedAdventure {
         if(!hasStaff) {
             System.out.println("You see a glowing staff sticking out of the floor in the middle of the room.\nWhen you pick it up, the staff vibrates and then glows brighter.");
             hasStaff = true;
+        } else if (hasStaff && !visitStaff) {
+            System.out.println("There is more to this room then there seems. In the corner is a message carved into the wall. It says\n\"Go right if you would like a sword, good luck\"");
+            visitStaff = true;
         } else {
             System.out.println("The room is dark. There is nothing else in here");
         }
