@@ -111,7 +111,7 @@ public class TextBasedAdventure {
                     int escape = (int) (Math.random() * 2);
                     if (escape == 1) {
                         System.out.println("\nYou managed to escape!");
-                        flight();
+                        fight();
                     }
                     else System.out.println("You couldn't get away!");
                     break;   
