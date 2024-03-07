@@ -5,6 +5,7 @@ public class TextBasedAdventure {
     SecureRandom ran= new SecureRandom();
     boolean hasSword = false;
     boolean hasWon = false;
+    boolean hasArmor = false;
     int playerHealth = 15;
     int giantHealth = 20;
     boolean hasStaff = false;
@@ -57,8 +58,18 @@ public class TextBasedAdventure {
         if(!hasStaff) {
             System.out.println("You see a glowing staff sticking out of the floor in the middle of the room.\nWhen you pick it up, the staff vibrates and then glows brighter.");
             hasStaff = true;
+        } else if (!hasArmor) {
+            System.out.println("The room is dark. There is nothing else in here.\nWait... there's a hole in the ground. Will you enter?\n1. Yes\n2. No");
+            int input = keyboardInput.nextInt();
+            if (input == 1) {
+                System.out.println("The hole is surprisingly shallow, so you are able to freely climb in. At the other end of this small hidden room is... a rusted but still usable breastplate! You gain additional Health!");
+                hasArmor = true;
+                playerHealth = playerHealth + 15;
+            } else if (input == 2) {
+                System.out.println("Yeah, you don't know what could be waiting for you at the end of that hole. Best to remain cautious.");
+            }
         } else {
-            System.out.println("The room is dark. There is nothing else in here");
+            System.out.println("The room is dark. There is nothing else in here.");
         }
         start();
     }
@@ -101,7 +112,7 @@ public class TextBasedAdventure {
                     int escape = (int) (Math.random() * 2);
                     if (escape == 1) {
                         System.out.println("\nYou managed to escape!");
-                        start();
+                        flight();
                     }
                     else System.out.println("You couldn't get away!");
                     break;   
