@@ -1,6 +1,8 @@
+import java.security.SecureRandom;
 import java.util.Scanner;
 
 public class TextBasedAdventure {
+    SecureRandom ran= new SecureRandom();
     boolean hasSword = false;
     boolean hasStaff = false;
     boolean visitStaff = false;
@@ -66,6 +68,19 @@ public class TextBasedAdventure {
             System.out.println("You defeat the giant with your sword and run out of the cave!");
         } else {
             System.out.println("You get stomped by the giant and red stuff goes everywhere.");
+        }
+    }
+
+    public void flight()
+    {
+        int num =ran.nextInt(10)+1;
+        if(num>5)
+        {
+            System.out.println("You made it past the monster but fell into a hole and fell in water and drowned ");
+        }
+        else if(num<5)
+        {
+            System.out.println(" You made it out the cave ");
         }
     }
 
