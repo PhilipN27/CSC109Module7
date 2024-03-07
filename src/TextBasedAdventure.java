@@ -1,10 +1,13 @@
+import java.security.SecureRandom;
 import java.util.Scanner;
 
 public class TextBasedAdventure {
+    SecureRandom ran= new SecureRandom();
     boolean hasSword = false;
     boolean hasWon = false;
     int playerHealth = 15;
     int giantHealth = 20;
+    boolean hasStaff = false;
     Scanner keyboardInput = new Scanner(System.in);
 
     public void execute() {
@@ -15,13 +18,15 @@ public class TextBasedAdventure {
     }
 
     public void start() {
-        System.out.println("You find yourself in a large room. What would you like to do?\n1. Go left \n2. Go right");
+        System.out.println("You find yourself in a large room. What would you like to do?\n1. Go left \n2. Go right \n3. Go Straight");
         int input = keyboardInput.nextInt();
         if (input == 1) {
             goLeft();
         }
         else if (input == 2) {
             goRight();
+        } else if (input == 3) {
+            goStraight();
         }
     }
 
@@ -44,6 +49,16 @@ public class TextBasedAdventure {
         }
         else {
             System.out.println("There's nothing here...");
+        }
+        start();
+    }
+
+    public void goStraight() {
+        if(!hasStaff) {
+            System.out.println("You see a glowing staff sticking out of the floor in the middle of the room.\nWhen you pick it up, the staff vibrates and then glows brighter.");
+            hasStaff = true;
+        } else {
+            System.out.println("The room is dark. There is nothing else in here");
         }
         start();
     }
@@ -113,6 +128,19 @@ public class TextBasedAdventure {
             }
         } else {
             System.out.println("You get stomped by the giant and red stuff goes everywhere.");
+        }
+    }
+
+    public void flight()
+    {
+        int num =ran.nextInt(10)+1;
+        if(num>5)
+        {
+            System.out.println("You made it past the monster but fell into a hole and fell in water and drowned ");
+        }
+        else if(num<5)
+        {
+            System.out.println(" You made it out the cave ");
         }
     }
 
