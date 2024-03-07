@@ -130,6 +130,19 @@ public class TextBasedAdventure {
         }
     }
 
+    public void interactWithCharacter() {
+        System.out.println("A mysterious figure appears before you. 'Answer my riddle and I shall grant you a clue to escape this cave,' it says.");
+        System.out.println("'I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?'");
+        String answer = keyboardInput.next();
+        if ("echo".equalsIgnoreCase(answer)) {
+            System.out.println("The figure nods approvingly. 'You are wise. Look for the lever hidden behind the stone in the next room.'");
+        } else {
+            System.out.println("The figure shakes its head. 'That is incorrect. You may try again later.'");
+        }
+        start();
+    }
+
+
     public static void main(String[] args) {
         new TextBasedAdventure().execute();
     }
