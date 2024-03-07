@@ -50,6 +50,7 @@ public class TextBasedAdventure {
     public void goStraight() {
         if(!hasStaff) {
             System.out.println("You see a glowing staff sticking out of the floor in the middle of the room.\nWhen you pick it up, the staff vibrates and then glows brighter.");
+            hasStaff = true;
         } else {
             System.out.println("The room is dark. There is nothing else in here");
         }
