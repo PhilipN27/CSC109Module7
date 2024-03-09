@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class TextBasedAdventure {
     SecureRandom ran= new SecureRandom();
+    boolean hasAxe=false;
     boolean hasSword = false;
     boolean hasWon = false;
     boolean hasArmor = false;
@@ -42,9 +43,12 @@ public class TextBasedAdventure {
     }
 
     public void goRight() {
-        if (!hasSword) {
+        if (!hasSword && !hasAxe) {
             System.out.println("You find a sword on the ground!");
             hasSword = true;
+        } else if (hasSword && !hasAxe) {
+            System.out.println("You find an axe on the ground!");
+            hasAxe = true;
         } else {
             System.out.println("There's nothing here...");
         }
@@ -75,67 +79,86 @@ public class TextBasedAdventure {
     }
 
     public void fight() {
-        if (hasSword) {
+        if (hasSword || hasAxe) { 
             System.out.println("Your health: " + playerHealth + "\nGiant's health: " + giantHealth + "\nWhat will you do?\n1. ATTACK\n2. ITEM\n3. MAGIC\n4. FLEE");
             int input = keyboardInput.nextInt();
             switch (input) {
                 case 1:
-                    int damage = (int) ((Math.random() * 20) + 1);
-                    if (damage == 20) {
-                        System.out.println("You score a critical hit!!");
-                        giantHealth = giantHealth - 10;
+                    int damage;
+                    if (hasSword) { 
+                        damage = (int) ((Math.random() * 20) + 1);
+                        if (damage == 20) {
+                            System.out.println("You score a critical hit!!");
+                            giantHealth = giantHealth - 10;
+                        } else if (damage > 15) {
+                            System.out.println("You swing your sword at the giant with unmatched ferocity!");
+                            giantHealth = giantHealth - 6;
+                        } else if (damage > 10) {
+                            System.out.println("You swing your sword at the giant!");
+                            giantHealth = giantHealth - 4;
+                        } else if (damage > 5) {
+                            System.out.println("You attempt to swing your sword at the giant!");
+                            giantHealth = giantHealth - 2;
+                        } else
+                            System.out.println("You try to swing at the giant, but it evades smoothly!");
+                    } else { 
+                        damage = (int) ((Math.random() * 25) + 1);
+                        if (damage == 25) {
+                            System.out.println("You score a critical hit!!");
+                            giantHealth = giantHealth - 12;
+                        } else if (damage > 18) {
+                            System.out.println("You swing your axe at the giant with unmatched ferocity!");
+                            giantHealth = giantHealth - 8;
+                        } else if (damage > 12) {
+                            System.out.println("You swing your axe at the giant!");
+                            giantHealth = giantHealth - 5;
+                        } else if (damage > 6) {
+                            System.out.println("You attempt to swing your axe at the giant!");
+                            giantHealth = giantHealth - 3;
+                        } else
+                            System.out.println("You try to swing at the giant, but it evades smoothly!");
                     }
-                    else if (damage > 15) {
-                        System.out.println("You swing your sword at the giant with unmatched ferocity!");
-                        giantHealth = giantHealth - 6;
-                    }
-                    else if (damage > 10) {
-                        System.out.println("You swing your sword at the giant!");
-                        giantHealth = giantHealth - 4;
-                    }
-                    else if (damage > 5) {
-                        System.out.println("You attempt to swing your sword at the giant!");
-                        giantHealth = giantHealth - 2;
-                    }
-                    else System.out.println("You try to swing at the giant, but it evades smoothly!");
-                    if (giantHealth < 1) hasWon = true;
+                    if (giantHealth < 1)
+                        hasWon = true;
                     break;
-
-                case 2: //for item usage during combat
+    
+                case 2: // for item usage during combat
                     System.out.println("You have no items!");
                     break;
-                case 3: //for magic usage during combat
+                case 3: // for magic usage during combat
                     System.out.println("You don't have magic!");
                     break;
-                case 4: //for fleeing
+                case 4: // for fleeing
                     System.out.println("Determining optimal escape route...");
                     int escape = (int) (Math.random() * 2);
                     if (escape == 1) {
                         System.out.println("\nYou managed to escape!");
                         fight();
-                    }
-                    else System.out.println("You couldn't get away!");
-                    break;   
+                    } else
+                        System.out.println("You couldn't get away!");
+                    break;
             }
-            if (hasWon) System.out.println("Victory! You defeat the giant with your sword and run out of the cave! You gain 0 XP and -1 GOLD.");
+            if (hasWon)
+                System.out.println(
+                        "Victory! You defeat the giant with your " + (hasSword ? "sword" : "axe") + " and run out of the cave! You gain 0 XP and -1 GOLD.");
             else {
                 System.out.println("The giant charges you!");
                 int damage = (int) ((Math.random() * 20) + 1);
-                    if (damage == 20) {
-                        System.out.println("The giant scores a critical hit!!");
-                        playerHealth = playerHealth - 5;
-                    }
-                    else if (damage > 10) {
-                        System.out.println("The giant's attack connects!");
-                        playerHealth = playerHealth - 3;
-                    }
-                    else if (damage > 5) {
-                        System.out.println("You manage to guard against the impact!");
-                        playerHealth = playerHealth - 1;
-                    }
-                    else System.out.println("You manage to evade the attack!");
-                    if (playerHealth < 1) System.out.println("You get stomped by the giant and red stuff goes everywhere.\nGAME OVER");
-                    else fight();
+                if (damage == 20) {
+                    System.out.println("The giant scores a critical hit!!");
+                    playerHealth = playerHealth - 5;
+                } else if (damage > 10) {
+                    System.out.println("The giant's attack connects!");
+                    playerHealth = playerHealth - 3;
+                } else if (damage > 5) {
+                    System.out.println("You manage to guard against the impact!");
+                    playerHealth = playerHealth - 1;
+                } else
+                    System.out.println("You manage to evade the attack!");
+                if (playerHealth < 1)
+                    System.out.println("You get stomped by the giant and red stuff goes everywhere.\nGAME OVER");
+                else
+                    fight();
             }
         } else {
             System.out.println("You get stomped by the giant and red stuff goes everywhere.");
